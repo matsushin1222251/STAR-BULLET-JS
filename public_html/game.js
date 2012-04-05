@@ -3826,7 +3826,7 @@ var spin_effect = Class.create(Sprite,{
      
        var bomb=[];
        bomb_num=0;
-       for(var i=0;i<3;i++){
+       for(var i=0;i<4;i++){
          var Bomb = Sound.load("bomb.wav");
          Bomb.volume=0.5;
          bomb[i]=Bomb; 
@@ -3836,14 +3836,14 @@ var spin_effect = Class.create(Sprite,{
            bomb[bomb_num].stop();
            bomb[bomb_num].play();
            bomb_num++;
-           if(bomb_num>2){bomb_num=0;}
+           if(bomb_num>1){bomb_num=0;}
            BOMB=0;
          }
        });
      
        var hit=[];
        hit_num=0;
-       for(var i=0;i<3;i++){
+       for(var i=0;i<4;i++){
          var Hit = Sound.load("lazer_hit.wav");
          Hit.volume=0.5;
          hit[i]=Hit; 
@@ -3853,14 +3853,14 @@ var spin_effect = Class.create(Sprite,{
            hit[hit_num].stop();
            hit[hit_num].play();
            hit_num++;
-           if(hit_num>2){hit_num=0;}
+           if(hit_num>3){hit_num=0;}
            HIT=0;
          }
        });
      
        var hit2=[];
        hit2_num=0;
-       for(var i=0;i<3;i++){
+       for(var i=0;i<4;i++){
          var Hit = Sound.load("lazer_hit2.wav");
          Hit.volume=0.5;
          hit2[i]=Hit; 
@@ -3870,7 +3870,7 @@ var spin_effect = Class.create(Sprite,{
            hit2[hit2_num].stop();
            hit2[hit2_num].play();
            hit2_num++;
-           if(hit2_num>2){hit2_num=0;}
+           if(hit2_num>3){hit2_num=0;}
            HIT2=0;
          }
        });
