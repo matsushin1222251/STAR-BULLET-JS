@@ -57,7 +57,7 @@ window.onload = function() {
   var Counter=0;
   var Kill=0;
   var Set=0;
-  var TimeLimit=0;
+  var TimeLimit=120;
   var Boss_HP=2000;
   var Boss=0;
   var LastBattle=0;
@@ -96,10 +96,10 @@ window.onload = function() {
   });
   game.rootScene.addEventListener("touchstart", function(e) { 
     isTouch = true;
-    startX = e.localX*game.scale;
-    startY = e.localY*game.scale;
-    touchX = e.localX*game.scale;
-    touchY = e.localY*game.scale;
+    startX = e.localX;
+    startY = e.localY;
+    touchX = e.localX;
+    touchY = e.localY;
     if(touch_lug>0)is2Touch=true;
     touch_lug=9;
   }); // タッチ開始
@@ -111,8 +111,8 @@ window.onload = function() {
     legth=0; 
   });  // タッチ終了
   game.rootScene.addEventListener("touchmove", function(e) {
-    touchX = e.localX*game.scale;
-    touchY = e.localY*game.scale;
+    touchX = e.localX;
+    touchY = e.localY;
     length=Math.sqrt((touchX-startX)*(touchX-startX)+(touchY-startY)*(touchY-startY));
     if(length>20 && quick==0){
       if(touchY>startY)quick=1;
@@ -149,10 +149,10 @@ window.onload = function() {
          this.star_bullet=0;
          this.lazer_charge=0;
          
-         var 体力=new HP_gage();
-         体力.master=this;
-         var 体力値=new HP_num();
-         体力値.master=this;
+         var hp_gage=new HP_gage();
+         hp_gage.master=this;
+         var hp=new HP_num();
+         hp.master=this;
          
          this.act_moving=false;
          this.act_lockon=false;
@@ -262,7 +262,7 @@ window.onload = function() {
                    game.rootScene.removeChild(enemies[i]);
                    delete enemies[i];
                  }
-                 var 結果表示=new result_window();
+                 var result=new result_window();
                }
              }
            }
@@ -678,7 +678,7 @@ window.onload = function() {
              this.x+=40;
              this.rotation=0;
              if(this.x>2000){
-               var 結果=new result_window();
+               var result=new result_window();
                this.face=9;
              }
             
@@ -704,7 +704,7 @@ window.onload = function() {
              if(this.scaleY>=1){
                this.start=1;
                this.scaleY=1;
-               var 結果=new result_1();
+               var result=new result_1();
                
              }
            }
@@ -777,7 +777,7 @@ window.onload = function() {
              if(this.item>=Item){
                this.step=5;
                Total+=this.item*20;
-               var ボーナス=new result_2();
+               var bonus=new result_2();
              }else{
                this.item++;
              }
@@ -863,13 +863,13 @@ window.onload = function() {
                if(this.bonus5>=1000){
                  this.step=5;
                  Total+=this.bonus5;
-                 var 合計=new result_3();
+                 var sum=new result_3();
                }else{
                  this.bonus5+=20;
                }
              }else{
                this.step=5;
-               var 合計=new result_3();
+               var sum=new result_3();
              }
            }
          });
@@ -2087,105 +2087,105 @@ var spin_effect = Class.create(Sprite,{
                this.set++;
                if(this.set==1){
                  for(var i=-4;i<=4;i++){
-                   var 雑魚=new enemy();
-                   if(i>=0){雑魚.x=700+50*i;}
-                   if(i<=0){雑魚.x=700-50*i;}
-                   雑魚.y=120+30*i;
+                   var zako=new enemy();
+                   if(i>=0){zako.x=700+50*i;}
+                   if(i<=0){zako.x=700-50*i;}
+                   zako.y=120+30*i;
                  }
-                 var 雑魚1=new enemy();
-                 雑魚1.x=900;
-                 雑魚1.y=120;
+                 var zako1=new enemy();
+                 zako1.x=900;
+                 zako1.y=120;
                }
                else if(this.set==5){
                  for(var i=-4;i<=4;i++){
-                   var 雑魚=new enemy();
-                   雑魚.guard=4;
+                   var zako=new enemy();
+                   zako.guard=4;
                    if(i>=0){
-                     雑魚.x=700+50*i;
-                     雑魚.stop=200+50*i;
+                     zako.x=700+50*i;
+                     zako.stop=200+50*i;
                    }
                    if(i<=0){
-                     雑魚.x=700-50*i;
-                     雑魚.stop=200-50*i;
+                     zako.x=700-50*i;
+                     zako.stop=200-50*i;
                    }
-                   雑魚.y=120+30*i;
+                   zako.y=120+30*i;
                    
                  }
-                 var 雑魚1=new enemy();
-                 雑魚1.x=800;
-                 雑魚1.y=120;
-                 雑魚1.guard=40;
-                 雑魚1.stop=150;
-                 雑魚1.level=4;
+                 var zako1=new enemy();
+                 zako1.x=800;
+                 zako1.y=120;
+                 zako1.guard=40;
+                 zako1.stop=150;
+                 zako1.level=4;
                    
                  for(var i=-4;i<=4;i++){
-                   var 雑魚=new enemy();
-                   雑魚.guard=4;
+                   var zako=new enemy();
+                   zako.guard=4;
                    if(i>=0){
-                     雑魚.x=1200-70*i;
-                     雑魚.stop=400-50*i;
+                     zako.x=1200-70*i;
+                     zako.stop=400-50*i;
                    }
                    if(i<=0){
-                     雑魚.x=1200+70*i;
-                     雑魚.stop=400+50*i;
+                     zako.x=1200+70*i;
+                     zako.stop=400+50*i;
                    }
-                   雑魚.y=120+20*i;
+                   zako.y=120+20*i;
                  }
                  for(var i=-4;i<=4;i++){
                    if(i!=0){
-                     var 雑魚=new enemy();
-                     雑魚.level=3;
-                     雑魚.hp=15;
+                     var zako=new enemy();
+                     zako.level=3;
+                     zako.hp=15;
                    }
                    if(i>0){
-                     雑魚.x=1250+50*i;
-                     雑魚.stop=200+50*i;
+                     zako.x=1250+50*i;
+                     zako.stop=200+50*i;
                    }
                    if(i<0){
-                     雑魚.x=1250-50*i;
-                     雑魚.stop=200-50*i;
+                     zako.x=1250-50*i;
+                     zako.stop=200-50*i;
                    }
-                   雑魚.y=120+20*i;
+                   zako.y=120+20*i;
                  }
                }
                else if(this.set==7){
                  for(var i=0;i<10;i++){
-                   var 雑魚=new enemy();
-                   雑魚.x=700+50*i;
-                   雑魚.y=120;
-                   雑魚.hp=50;
-                   雑魚.stop=200+2*i;
+                   var zako=new enemy();
+                   zako.x=700+50*i;
+                   zako.y=120;
+                   zako.hp=50;
+                   zako.stop=200+2*i;
                  }
                }
                else if(this.set==13){
                  for(var i=-1;i<=1;i++){
-                   var 雑魚=new enemy();
-                   雑魚.x=1000;
-                   雑魚.y=120;
-                   雑魚.hp=200;
-                   雑魚.guard=100;
-                   雑魚.level=5;
+                   var zako=new enemy();
+                   zako.x=1000;
+                   zako.y=120;
+                   zako.hp=200;
+                   zako.guard=100;
+                   zako.level=5;
                  }
                }
                else{
                  for(var i=1;i<=10;i++){
-                   var 雑魚=new enemy(244,105);
-                   雑魚.x=Math.floor(Math.random()*300)+700;
-                   雑魚.y=Math.floor(Math.random()*210)+40;
+                   var zako=new enemy(244,105);
+                   zako.x=Math.floor(Math.random()*300)+700;
+                   zako.y=Math.floor(Math.random()*210)+40;
                    
                    if(this.set>10){
-                     雑魚.level=4;
-                     雑魚.hp=20;
+                     zako.level=4;
+                     zako.hp=20;
                    }
                    else if(this.set>5){
-                     雑魚.level=3;
-                     雑魚.hp=15;
+                     zako.level=3;
+                     zako.hp=15;
                    }
                    else if(this.set>2){
-                     雑魚.level=2;
-                     雑魚.hp=10;
+                     zako.level=2;
+                     zako.hp=10;
                    }
-                   else if(this.set>1){雑魚.level=1;}
+                   else if(this.set>1){zako.level=1;}
                  }
                }
              }
@@ -2202,41 +2202,41 @@ var spin_effect = Class.create(Sprite,{
                g.y=140;
                g.type=3;
                
-               var 右肩 = new boss_shoulder();
-               右肩.frame=1;
-               右肩.type=3;
-               右肩.x=1200;
-               右肩.y=100;
+               var right_shoulder = new boss_shoulder();
+               right_shoulder.frame=1;
+               right_shoulder.type=3;
+               right_shoulder.x=1200;
+               right_shoulder.y=100;
                
    
-               var 右腕 = new boss_arm();
-               右腕.frame=4;
-               右腕.type=5;
-               右腕.x=1200;
-               右腕.y=100;
+               var right_arm = new boss_arm();
+               right_arm.frame=4;
+               right_arm.type=5;
+               right_arm.x=1200;
+               right_arm.y=100;
                
    
-               var ボス = new boss();
-               ボス.x=1200;
-               ボス.y=100;
+               var boss = new boss();
+               boss.x=1200;
+               boss.y=100;
                
-               var 頭=new boss_head();
-               頭.x=1200;
-               頭.y=100;
+               var head=new boss_head();
+               head.x=1200;
+               head.y=100;
                
-               var 左肩 = new boss_shoulder();
-               左肩.x=1200;
-               左肩.y=100;
-               
-   
-               var 左腕 = new boss_arm();
-               左腕.x=1200;
-               左腕.y=100;
+               var left_shoulder = new boss_shoulder();
+               left_shoulder.x=1200;
+               left_shoulder.y=100;
                
    
-               var 盾 = new boss_shield();
-               盾.master=ボス;
-               盾.opacity=0;
+               var left_arm = new boss_arm();
+               left_arm.x=1200;
+               left_arm.y=100;
+               
+   
+               var shield = new boss_shield();
+               shield.master=boss;
+               shield.opacity=0;
    
                
              }
@@ -2799,9 +2799,9 @@ var spin_effect = Class.create(Sprite,{
                if(this.attack_lug<=0){
                  this.pettern=1;
                  this.attack_lug=200;
-                 var 地雷 = new enemy_bomb();
-                 地雷.x=400;
-                 地雷.y=80;
+                 var bomb = new enemy_bomb();
+                 bomb.x=400;
+                 bomb.y=80;
                }
              }
              if(this.pettern==1){
@@ -2877,62 +2877,62 @@ var spin_effect = Class.create(Sprite,{
                  this.pettern=1;
                  this.attack_lug=100;
                  for(var i=-4;i<=4;i++){
-                   var 爆弾=new enemy_beam2();
-                   爆弾.x=650+100*Math.cos((180+6*i)/180*Math.PI);
-                   爆弾.y=160+100*Math.sin((180+6*i)/180*Math.PI);
-                   爆弾.rotation=180+6*i;
-                   爆弾.frame=1;
-                   爆弾.v=3;
-                   爆弾.scale(1,1);
-                   var 爆弾=new enemy_beam2();
-                   爆弾.x=200+500*Math.cos((30*i)/180*Math.PI);
-                   爆弾.y=160+500*Math.sin((30*i)/180*Math.PI);
-                   爆弾.rotation=180+30*i;
-                   爆弾.frame=3;
-                   爆弾.v=3;
-                   爆弾.scale(1.5,1.5);
+                   var bomb=new enemy_beam2();
+                   bomb.x=650+100*Math.cos((180+6*i)/180*Math.PI);
+                   bomb.y=160+100*Math.sin((180+6*i)/180*Math.PI);
+                   bomb.rotation=180+6*i;
+                   bomb.frame=1;
+                   bomb.v=3;
+                   bomb.scale(1,1);
+                   var bomb=new enemy_beam2();
+                   bomb.x=200+500*Math.cos((30*i)/180*Math.PI);
+                   bomb.y=160+500*Math.sin((30*i)/180*Math.PI);
+                   bomb.rotation=180+30*i;
+                   bomb.frame=3;
+                   bomb.v=3;
+                   bomb.scale(1.5,1.5);
                  }
                  for(var i=0;i<=10;i++){
-                   var 爆弾=new enemy_beam2();
-                   爆弾.x=600+100*Math.cos((150+10*i)/180*Math.PI);
-                   爆弾.y=50+100*Math.sin((150+10*i)/180*Math.PI);
-                   爆弾.rotation=115+10*i;
-                   爆弾.frame=4;
-                   爆弾.v=5;
-                   爆弾.scale(1.5,1.5);
-                   var 爆弾=new enemy_beam2();
-                   爆弾.x=600+100*Math.cos(-(150+10*i)/180*Math.PI);
-                   爆弾.y=250+100*Math.sin(-(150+10*i)/180*Math.PI);
-                   爆弾.rotation=-115-10*i;
-                   爆弾.frame=4;
-                   爆弾.v=5;
-                   爆弾.scale(1.5,1.5);
+                   var bomb=new enemy_beam2();
+                   bomb.x=600+100*Math.cos((150+10*i)/180*Math.PI);
+                   bomb.y=50+100*Math.sin((150+10*i)/180*Math.PI);
+                   bomb.rotation=115+10*i;
+                   bomb.frame=4;
+                   bomb.v=5;
+                   bomb.scale(1.5,1.5);
+                   var bomb=new enemy_beam2();
+                   bomb.x=600+100*Math.cos(-(150+10*i)/180*Math.PI);
+                   bomb.y=250+100*Math.sin(-(150+10*i)/180*Math.PI);
+                   bomb.rotation=-115-10*i;
+                   bomb.frame=4;
+                   bomb.v=5;
+                   bomb.scale(1.5,1.5);
                  }
                  for(var i=-5;i<=5;i++){
-                   var 爆弾=new enemy_beam2();
-                   爆弾.x=600+50*Math.cos((10*i)/180*Math.PI);
-                   爆弾.y=160+50*Math.sin((10*i)/180*Math.PI);
-                   爆弾.rotation=180+10*i;
-                   爆弾.frame=0;
-                   爆弾.v=5;
-                   爆弾.scale(1.5,1.5);
+                   var bomb=new enemy_beam2();
+                   bomb.x=600+50*Math.cos((10*i)/180*Math.PI);
+                   bomb.y=160+50*Math.sin((10*i)/180*Math.PI);
+                   bomb.rotation=180+10*i;
+                   bomb.frame=0;
+                   bomb.v=5;
+                   bomb.scale(1.5,1.5);
                    
                  }
                  for(var i=0;i<10;i++){
-                   var 爆弾=new enemy_beam2();
-                   爆弾.x=600+60*i;
-                   爆弾.y=160+80;
-                   爆弾.rotation=180;
-                   爆弾.frame=2;
-                   爆弾.v=3;
-                   爆弾.scale(1.5,1.5);
-                   var 爆弾=new enemy_beam2();
-                   爆弾.x=600+60*i;
-                   爆弾.y=160-80;
-                   爆弾.rotation=180;
-                   爆弾.frame=2;
-                   爆弾.v=3;
-                   爆弾.scale(1.5,1.5);
+                   var bomb=new enemy_beam2();
+                   bomb.x=600+60*i;
+                   bomb.y=160+80;
+                   bomb.rotation=180;
+                   bomb.frame=2;
+                   bomb.v=3;
+                   bomb.scale(1.5,1.5);
+                   var bomb=new enemy_beam2();
+                   bomb.x=600+60*i;
+                   bomb.y=160-80;
+                   bomb.rotation=180;
+                   bomb.frame=2;
+                   bomb.v=3;
+                   bomb.scale(1.5,1.5);
                  }
                  
                }
@@ -3462,12 +3462,12 @@ var spin_effect = Class.create(Sprite,{
                if(this.beam_lug<=0 && this.type==5){
                  
                  for(var i=1;i<=5;i++){
-                   var ビーム=new enemy_beam1();
-                   ビーム.x=this.x-Math.floor(Math.random()*30)-20;
-                   ビーム.y=this.y+Math.floor(Math.random()*100)-10;
-                   ビーム.rotation=180;
-                   ビーム.frame=Math.floor(Math.random()*6)*2;
-                   ビーム.v=30;
+                   var beam=new enemy_beam1();
+                   beam.x=this.x-Math.floor(Math.random()*30)-20;
+                   beam.y=this.y+Math.floor(Math.random()*100)-10;
+                   beam.rotation=180;
+                   beam.frame=Math.floor(Math.random()*6)*2;
+                   beam.v=30;
                  }
                  
                  var r = new bomb_r();
@@ -3488,12 +3488,12 @@ var spin_effect = Class.create(Sprite,{
                this.beam_lug-=1*TimeSpeed;
                if(this.beam_lug<=0 && this.type==4){
                  for(var i=-2;i<=2;i++){
-                   var ビーム=new enemy_beam3();
-                   ビーム.x=this.x-20;
-                   ビーム.y=this.y+40;
-                   ビーム.rotation=180+this.beam_chain*3*i;
-                   ビーム.v=0;
-                   ビーム.hit=1;
+                   var beam=new enemy_beam3();
+                   beam.x=this.x-20;
+                   beam.y=this.y+40;
+                   beam.rotation=180+this.beam_chain*3*i;
+                   beam.v=0;
+                   beam.hit=1;
                    
                  }
                  HIT2=1;
@@ -3726,29 +3726,31 @@ var spin_effect = Class.create(Sprite,{
 
   game.rootScene.backgroundColor='black';
 
-   var 背景=new Sprite(1600,180);
-   背景.image=game.assets["background.gif"];
-   背景.y=BG_y;
-   背景.scaleX=1;
-   背景.scaleY=1;
-   背景.addEventListener('enterframe',function(){
+   var bg=new Sprite(1600,180);
+   bg.image=game.assets["background.gif"];
+   bg.y=BG_y;
+   bg.scaleX=1;
+   bg.scaleY=1;
+   bg.addEventListener('enterframe',function(){
      this.y=BG_y;
      if(Clear==0)this.x-=Speed*TimeSpeed;
      if(this.x<=-640)this.x=0;
    });
-   game.rootScene.addChild(背景);
+   game.rootScene.addChild(bg);
    
-   var スタート=new Sprite(236,48);
-   スタート.image=game.assets["start.png"];
-   スタート.x=240;
-   スタート.y=130;
-   スタート.addEventListener('enterframe',function(){
-     if(game.input.a || isTouch){
-       var 制限時間=new Label();
-       制限時間.x=400;
-       制限時間.font = "32px Palatino";
-       制限時間.color = 'white';
-       制限時間.addEventListener('enterframe',function(){
+   var start=new Sprite(236,48);
+   start.image=game.assets["start.png"];
+   start.x=240;
+   start.y=130;
+   start.opacity=1;
+   start.addEventListener('enterframe',function(){
+     if((game.input.a || isTouch) && this.opacity==1){
+       this.opacity=0;
+       var time=new Label();
+       time.x=400;
+       time.font = "32px Palatino";
+       time.color = 'white';
+       time.addEventListener('enterframe',function(){
          if(TimeLimit>0){
            if(TimeLimit%60>9){this.text="TIME LIMIT  "+(TimeLimit-TimeLimit%60)/60+":"+TimeLimit%60;}
            if(TimeLimit%60<=9){this.text="TIME LIMIT  "+(TimeLimit-TimeLimit%60)/60+":0"+TimeLimit%60;}
@@ -3757,25 +3759,25 @@ var spin_effect = Class.create(Sprite,{
            this.color = 'red';
          }
        });
-       game.rootScene.addChild(制限時間);
+       game.rootScene.addChild(time);
    
-       var 砲台 = new houdai();
-       砲台.x=150;
-       砲台.y=20;
+       var canon = new houdai();
+       canon.x=150;
+       canon.y=20;
    
-       var 砲台2 = new houdai();
-       砲台2.beam_lug=40;
-       砲台2.x=150;
-       砲台2.y=230;
+       var canon = new houdai();
+       canon.beam_lug=40;
+       canon.x=150;
+       canon.y=230;
 
-       var 自機 = new Player(101,37);
-       自機.x=-100;
-       自機.y=160;
-       自機.face=3;
+       var ziki = new Player(101,37);
+       ziki.x=-100;
+       ziki.y=160;
+       ziki.face=3;
    
    
    
-       var エネルギー = new lazer_power();
+       var power = new lazer_power();
      
        var HP = new Sprite(200,40);
        HP.image=game.assets["hp_gage.gif"];
@@ -3783,19 +3785,19 @@ var spin_effect = Class.create(Sprite,{
        HP.x=100;
        game.rootScene.addChild(HP);
    
-       var 武器 = new beam_condition();
-       var 説明 = new manual();
+       var weapon = new beam_condition();
+       var manual = new manual();
      
-       var 敵軍=new enemy_manager();
+       var enemy=new enemy_manager();
      
      
      
        var bomb=[];
        bomb_num=0;
        for(var i=0;i<3;i++){
-         var 爆発音 = Sound.load("bomb.wav");
-         爆発音.volume=0.5;
-         bomb[i]=爆発音; 
+         var Bomb = Sound.load("bomb.wav");
+         Bomb.volume=0.5;
+         bomb[i]=Bomb; 
        }
        game.rootScene.addEventListener(Event.ENTER_FRAME, function(){
          if(BOMB==1){
@@ -3810,9 +3812,9 @@ var spin_effect = Class.create(Sprite,{
        var hit=[];
        hit_num=0;
        for(var i=0;i<3;i++){
-         var ヒット = Sound.load("lazer_hit.wav");
-         ヒット.volume=0.5;
-         hit[i]=ヒット; 
+         var Hit = Sound.load("lazer_hit.wav");
+         Hit.volume=0.5;
+         hit[i]=Hit; 
        }
        game.rootScene.addEventListener(Event.ENTER_FRAME, function(){
          if(HIT==1){
@@ -3827,9 +3829,9 @@ var spin_effect = Class.create(Sprite,{
        var hit2=[];
        hit2_num=0;
        for(var i=0;i<3;i++){
-         var ヒット = Sound.load("lazer_hit2.wav");
-         ヒット.volume=0.5;
-         hit2[i]=ヒット; 
+         var Hit = Sound.load("lazer_hit2.wav");
+         Hit.volume=0.5;
+         hit2[i]=Hit; 
        }
        game.rootScene.addEventListener(Event.ENTER_FRAME, function(){
          if(HIT2==1){
@@ -3848,7 +3850,7 @@ var spin_effect = Class.create(Sprite,{
      
      
    });
-   game.rootScene.addChild(スタート);
+   game.rootScene.addChild(start);
    
    
    
