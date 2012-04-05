@@ -121,8 +121,6 @@ window.onload = function() {
       if(touchY>startY)quick=1;
       if(touchY<startY)quick=-1;
     }
-    if(touchX<0 || touchX>680){isTouch=false;}
-    if(touchY<0 || touchY>320){isTouch=false;}
   });
 
 //自機のクラス設定
