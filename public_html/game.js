@@ -2,8 +2,11 @@
 window.onload = function() {
 
   var game=new Game(680,320);
+  game.preload('boss.mp3');
+  game.preload('stage.mp3');
   game.preload('charge.wav');
-  
+  game.preload('lazer_hit.mp3');
+  game.preload('lazer_hit2.mp3');
   game.preload('bomb.wav');
   game.preload('ziki.gif');
   game.preload('spin_effect.gif');
@@ -13,6 +16,7 @@ window.onload = function() {
   game.preload('bomb_b.gif');
   game.preload('bomb_s.gif');
   game.preload('bomb.gif');
+  game.preload('lazer_button.gif');
   game.preload('lazer.gif');
   game.preload('zako.gif');
   game.preload('ring.gif');
@@ -28,7 +32,8 @@ window.onload = function() {
   game.preload('boss_lazer.gif');
   game.preload('boss_shield.gif');
   game.preload('background.gif');
-  game.preload('start.png');
+  game.preload('title.gif');
+  game.preload('black.gif');
   
   game.keybind(90,"a");
   game.keybind(88,"b");
@@ -86,7 +91,7 @@ window.onload = function() {
   var shortTouch=false;
   var quick=0;
   var legth=0;
-  
+  var L_C=false;
   
   
   game.rootScene.addEventListener("enterframe", function() { 
@@ -122,10 +127,25 @@ window.onload = function() {
     }
   });
 
+  var BGM1 = Sound.load("stage.mp3");
+  var BGM2 = Sound.load("boss.mp3");
+  var bgm_lug=300;
+  game.rootScene.addEventListener(Event.ENTER_FRAME, function(){
+    if(Boss==0)BGM1.play();
+    if(Boss==1){
+      BGM1.stop();
+      bgm_lug--;
+      if(bgm_lug<=0 && Clear==0){BGM2.play();BGM2.volume=0.5;}
+      if(Clear>0){BGM2.stop();}
+    }
+  });
+  var bgm_lug=120;
+  
+  
+  
+
 //自機のクラス設定
 
-  
-  
   var Player = Class.create(Sprite, { 
       initialize: function() { 
          Sprite.call(this,101,37);
@@ -403,7 +423,7 @@ window.onload = function() {
              if(Escape==1){
                this.face=8;
              }
-             if((game.input.left || is2Touch==true) && Lazer>0){
+             if((game.input.left || L_C==true) && Lazer>0){
                this.lazer_charge++;
                game.assets['charge.wav'].play();
                if(this.lazer_charge>=30){
@@ -648,9 +668,10 @@ window.onload = function() {
              this.rotation=0;
              if(this.y>160){this.y-=3;}
              if(this.y<160){this.y+=3;}
-             if((game.input.left || is2Touch==true)&& Lazer>0){
+             if((game.input.left || L_C==true)&& Lazer>0){
                this.lazer_charge++;
                if(this.lazer_charge>=30){
+                 game.assets['charge.wav'].play();
                  this.face=7;
                  LastBattle=2;
                  this.lazer_charge=0;
@@ -900,8 +921,13 @@ window.onload = function() {
              if(game.input.a || isTouch==true){
                var ending=new Scene();
                ending.backgroundColor = 'black';
+               var thanks=new Label();
+               thanks.font ="40px Palatino";
+               thanks.color='yellow';
+               thanks.y=80;
+               thanks.text="Thank you for playing!";
+               game.ending.addChild(thanks);
                game.pushScene(ending);
-               location.href = "http://starbulletjs.fluxflex.com";
              }
            }
          });
@@ -1034,7 +1060,7 @@ window.onload = function() {
              if(this.searching<=0){this.appear=0;}
            }
            if(this.appear==4){
-             this.text="攻撃ボタンを連打しろ！";
+             this.text="連打しろ！";
              this.searching--;
              if(this.searching<=0){this.appear=0;}
            }
@@ -1272,7 +1298,8 @@ var spin_effect = Class.create(Sprite,{
            for(var j in enemies){
              if(enemies[j].type==0 && enemies[j].y<this.y+100 && enemies[j].y>this.y-100 && enemies[j].x<this.x+50*this.scaleX  && enemies[j].x<700){
                enemies[j].spin=100;
-               BOMB=1;
+               HIT=1;
+               HIT2=1;
                if(this.hp>10){
                  if(enemies[j].hit_lug<=0){
                    enemies[j].x-=20;
@@ -1349,7 +1376,55 @@ var spin_effect = Class.create(Sprite,{
          game.rootScene.addChild(this);
       }
 　});
-
+  var lazer_button = Class.create(Sprite,{ 
+      initialize: function() { 
+         Sprite.call(this,127,127);
+         this.image=game.assets['lazer_button.gif'];
+         this.frame=0;
+         this.master=null;
+         this.opacity=0;
+         this.scale=(0,1);
+         this.addEventListener('enterframe',function(){
+           if(this.master==null){
+             for(var i in player){
+               if(player[i].hp>0){
+                 this.master=player[i];
+               }
+             }
+           }
+           else{
+             this.x=this.master.x-100;
+             this.y=this.master.y-50;
+             if(this.master.hp<=0){
+               this.master=null;
+               Lazer=0;
+             }
+           }
+           if(Lazer>0){
+             this.opacity=1;
+             if(this.scaleX<1){this.scaleX+=0.1;}
+             if(isTouch==true){
+               if(touchX>this.x && touchY>this.y && touchX<this.x+127 && touchY<this.y+127){
+                 this.frame++;
+                 L_C=true;
+               }
+               else{
+                 this.frame=0;
+                 L_C=false;
+               }
+             }else{
+               this.frame=0;
+                L_C=false;
+             }
+           }
+           else{
+             this.opacity-=0.1;
+             if(this.scaleX>0){this.scaleX-=0.1;}
+           }
+         });
+         game.rootScene.addChild(this);
+      }
+　});
   var beam =Class.create(Sprite,{
       initialize: function(){
          Sprite.call(this,76,17);
@@ -1795,7 +1870,6 @@ var spin_effect = Class.create(Sprite,{
              Kill++;
              
              BOMB=1;
-             
              delete enemies[this.key];
              delete this;
              game.rootScene.removeChild(this);
@@ -3769,13 +3843,39 @@ var spin_effect = Class.create(Sprite,{
    });
    game.rootScene.addChild(bg);
    
-   var start=new Sprite(236,48);
-   start.image=game.assets["start.png"];
-   start.x=240;
-   start.y=130;
+   var gear=new Sprite(161,161);
+   gear.image=game.assets["black.gif"];
+   gear.x=260;
+   gear.y=80;
+   gear.v=0;
+   gear.scale(2,2);
+   gear.addEventListener('enterframe',function(){
+     if(this.v<45 && this.v>-45){
+       this.rotate(this.v);
+       if(game.input.left){this.v-=0.1;}
+       if(game.input.right){this.v+=0.1;}
+       if(game.input.right==false && game.input.left==false){
+         if(this.v>0){this.v-=0.2;}
+         if(this.v<0){this.v+=0.2;}
+       }
+     }else{
+       this.y+=40;
+     }
+   });
+   game.rootScene.addChild(gear);
+   
+   
+   
+   
+   var start=new Sprite(680,320);
+   start.image=game.assets["title.gif"];
+   start.x=0;
+   start.y=20;
    start.opacity=1;
    start.addEventListener('enterframe',function(){
      if((game.input.a || isTouch) && this.opacity==1){
+       gear.v=3600;
+       gear.opacity=0;
        this.opacity=0;
        var time=new Label();
        time.x=400;
@@ -3809,7 +3909,7 @@ var spin_effect = Class.create(Sprite,{
    
    
        var power = new lazer_power();
-     
+       var button = new lazer_button();
        var HP = new Sprite(200,40);
        HP.image=game.assets["hp_gage.gif"];
        HP.frame=0;
@@ -3844,7 +3944,7 @@ var spin_effect = Class.create(Sprite,{
        var hit=[];
        hit_num=0;
        for(var i=0;i<4;i++){
-         var Hit = Sound.load("lazer_hit.wav");
+         var Hit = Sound.load("lazer_hit.mp3");
          Hit.volume=0.5;
          hit[i]=Hit; 
        }
@@ -3861,7 +3961,7 @@ var spin_effect = Class.create(Sprite,{
        var hit2=[];
        hit2_num=0;
        for(var i=0;i<4;i++){
-         var Hit = Sound.load("lazer_hit2.wav");
+         var Hit = Sound.load("lazer_hit2.mp3");
          Hit.volume=0.5;
          hit2[i]=Hit; 
        }
