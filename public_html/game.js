@@ -3,9 +3,8 @@ window.onload = function() {
 
   var game=new Game(680,320);
   game.preload('charge.wav');
-  game.preload('boss.wav');
+  
   game.preload('bomb.wav');
-  game.preload('stage.wav');
   game.preload('ziki.gif');
   game.preload('spin_effect.gif');
   game.preload('beam.gif');
@@ -57,8 +56,8 @@ window.onload = function() {
   var Counter=0;
   var Kill=0;
   var Set=0;
-  var TimeLimit=120;
-  var Boss_HP=2000;
+  var TimeLimit=0;
+  var Boss_HP=0;
   var Boss=0;
   var LastBattle=0;
   var Clear=0;
@@ -902,6 +901,7 @@ window.onload = function() {
                var ending=new Scene();
                ending.backgroundColor = 'black';
                game.pushScene(ending);
+               location.href = "http://starbulletjs.fluxflex.com";
              }
            }
          });
@@ -2238,7 +2238,7 @@ var spin_effect = Class.create(Sprite,{
                
    
                var shield = new boss_shield();
-               shield.master=boss;
+               shield.master=boss_body;
                shield.opacity=0;
    
                
