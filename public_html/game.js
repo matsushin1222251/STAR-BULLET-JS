@@ -1492,7 +1492,7 @@ var spin_effect = Class.create(Sprite,{
              l.x=this.x;
              l.y=this.y;
              l.rotation=this.rotation;
-             this.line=1;
+             this.line=2;
            }
            this.wait-=1;
            if(this.target==null){
