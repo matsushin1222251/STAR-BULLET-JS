@@ -102,6 +102,9 @@ window.onload = function() {
     touchY = e.localY;
     if(touch_lug>0)is2Touch=true;
     touch_lug=9;
+    
+    
+    
   }); // タッチ開始
   game.rootScene.addEventListener("touchend", function(e) {
     isTouch = false;
@@ -118,6 +121,8 @@ window.onload = function() {
       if(touchY>startY)quick=1;
       if(touchY<startY)quick=-1;
     }
+    if(touchX<0 || touchX>680){isTouch=false;}
+    if(touchY<0 || touchY>320){isTouch=false;}
   });
 
 //自機のクラス設定
@@ -3786,9 +3791,10 @@ var spin_effect = Class.create(Sprite,{
        game.rootScene.addChild(HP);
    
        var weapon = new beam_condition();
-       var manual = new manual();
+
+       var sestsumei = new manual();
      
-       var enemy=new enemy_manager();
+       var enemy_mother=new enemy_manager();
      
      
      
