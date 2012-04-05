@@ -432,7 +432,7 @@ window.onload = function() {
                bb.frame=3;
                if(SB==0){
                  for(var i in enemy_beam){
-                   if(enemy_beam[i].within(this,enemy_beam[i].radious+5) && this.hit_lug<=0 && enemy_beam[i].hit==0 && this.star_bullet==0){
+                   if(enemy_beam[i].within(this,enemy_beam[i].radious+10) && this.hit_lug<=0 && enemy_beam[i].hit==0 && this.star_bullet==0){
                      this.star_bullet=1;
                      game.assets['charge.wav'].play();
                      enemy_beam[i].hit=1;
@@ -1473,10 +1473,28 @@ var spin_effect = Class.create(Sprite,{
          this.line=2;
          this.target=null;
          this.direction=0;
-         this.wait=5;
+         this.wait=2;
          this.addEventListener('enterframe',function(){
            SB=1;
-           this.wait-=1*TimeSpeed;
+           for(var i in enemy_beam){
+             if(1){
+               enemy_beam[i].x=-100;
+               game.rootScene.removeChild(enemy_beam[i]);
+               delete enemy_beam[enemy_beam[i].key];
+             }
+           }
+           this.line-=1;
+           if(this.line<=0){
+             var l=new beam_line();
+             l.frame=this.frame+1;
+             l.scaleX=1;
+             l.scaleY=2;
+             l.x=this.x;
+             l.y=this.y;
+             l.rotation=this.rotation;
+             this.line=2;
+           }
+           this.wait-=1;
            if(this.target==null){
              for(var s=1;s<=10;s++){
                if(this.target==null){
@@ -1489,15 +1507,26 @@ var spin_effect = Class.create(Sprite,{
              }
            }
            else{
-             this.direction=Math.atan((this.y-this.target.y-40)/(this.x-this.target.x-80))*180/Math.PI;
+             if(this.x<this.target.x+80){
+               this.direction=Math.atan((this.y-this.target.y-40)/(this.x-this.target.x-80))*180/Math.PI;
+             }
+             if(this.x>this.target.x+80){
+               if(this.rotation>=0){
+                 this.direction=Math.atan((this.y-this.target.y-40)/(this.x-this.target.x-80))*180/Math.PI+180;
+               }
+               if(this.rotation<0){
+                 this.direction=Math.atan((this.y-this.target.y-40)/(this.x-this.target.x-80))*180/Math.PI-180;
+               }
+             }
              if(this.wait<=0){
-               if(this.rotation>this.direction){this.rotate(-20*TimeSpeed);}
-               if(this.rotation<this.direction){this.rotate(20*TimeSpeed);}
+               if(this.rotation>this.direction){this.rotate(-20);}
+               if(this.rotation<this.direction){this.rotate(20);}
+               if(this.rotation>this.direction-20 && this.rotation<this.direction+20){this.rotation=this.direction;}
              }
              if(this.target.hp<=0){this.target=null;}
            }
-           this.x+=this.v*Math.cos(this.rotation/180*Math.PI)*TimeSpeed;
-           this.y+=this.v*Math.sin(this.rotation/180*Math.PI)*TimeSpeed;
+           this.x+=this.v*Math.cos(this.rotation/180*Math.PI);
+           this.y+=this.v*Math.sin(this.rotation/180*Math.PI);
            for(var i in enemies){
              if(enemies[i].within(this,enemies[i].hit_radious) && enemies[i].hp>0){
                enemies[i].hp-=10;
@@ -1515,7 +1544,6 @@ var spin_effect = Class.create(Sprite,{
                delete this;
              }
            }
-           this.line-=1*TimeSpeed;
            
            if(this.x>2700 || this.x<-1400 || this.y<-1000 || this.y>1400){
              SB=0;
@@ -2358,7 +2386,7 @@ var spin_effect = Class.create(Sprite,{
          this.scaleX=0.5;
          this.scaleY=0.5;
          this.addEventListener('enterframe',function(){
-           this.opacity-=0.4*TimeSpeed;
+           this.opacity-=0.3;
            if(this.opacity<=0){
              game.rootScene.removeChild(this);
              delete this;
@@ -2378,7 +2406,7 @@ var spin_effect = Class.create(Sprite,{
            this.y+=this.v*Math.sin(this.rotation/180*Math.PI)*TimeSpeed;
            this.scaleX*=1.05;
            this.scaleY*=1.05;
-           this.opacity-=0.05;
+           this.opacity-=0.1;
            if(this.opacity<=0){
              game.rootScene.removeChild(this);
              delete this;
