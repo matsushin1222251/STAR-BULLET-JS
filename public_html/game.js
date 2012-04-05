@@ -2221,9 +2221,9 @@ var spin_effect = Class.create(Sprite,{
                right_arm.y=100;
                
    
-               var boss = new boss();
-               boss.x=1200;
-               boss.y=100;
+               var boss_body = new boss();
+               boss_body.x=1200;
+               boss_body.y=100;
                
                var head=new boss_head();
                head.x=1200;
