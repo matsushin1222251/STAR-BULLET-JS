@@ -168,7 +168,7 @@ window.onload = function() {
          this.addEventListener('enterframe',function(){
            if(isTouch==true){
              this.act_beam=true;
-             if(touchX<=300){
+             if(touchX<=340){
                this.act_moving=true;
                this.act_lockon=false;
              }else{
@@ -3114,8 +3114,8 @@ var spin_effect = Class.create(Sprite,{
              this.direction_2=30;
            }
            if(this.face==6){
-             this.roll_1=0.5;
-             this.roll_2=0.5;
+             this.roll_1=10;
+             this.roll_2=1;
              this.direction_1=30;
              this.direction_2=this.master.direction;
            }
