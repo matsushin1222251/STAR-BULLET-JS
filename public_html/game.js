@@ -3843,12 +3843,12 @@ var spin_effect = Class.create(Sprite,{
    });
    game.rootScene.addChild(bg);
    
-   var gear=new Sprite(161,161);
+   var gear=new Sprite(322,322);
    gear.image=game.assets["black.gif"];
-   gear.x=260;
-   gear.y=80;
+   gear.x=180;
+   gear.y=0;
    gear.v=0;
-   gear.scale(2,2);
+   gear.scale(1,1);
    gear.addEventListener('enterframe',function(){
      if(this.v<45 && this.v>-45){
        this.rotate(this.v);
@@ -3870,7 +3870,7 @@ var spin_effect = Class.create(Sprite,{
    var start=new Sprite(680,320);
    start.image=game.assets["title.gif"];
    start.x=0;
-   start.y=20;
+   start.y=40;
    start.opacity=1;
    start.addEventListener('enterframe',function(){
      if((game.input.a || isTouch) && this.opacity==1){
