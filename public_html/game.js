@@ -71,6 +71,7 @@ window.onload = function() {
   var Escape=0;
   var Speed=2;
   var BG_y=140;
+  var HELL=0;
   var Location=160;
   game.input.up=true;
   game.input.down=true;
@@ -204,6 +205,10 @@ window.onload = function() {
            this.hit_lug-=1*TimeSpeed;
            if(this.y<=0){this.y=0;}
            if(this.y>=290){this.y=290;}
+           
+           if(Power>3){Power=3;}
+           if(Power<1){Power=1;}
+           if(this.hp<0){this.hp=0;}
            
            //アニメーションの設定
            if(this.face!=1){
@@ -500,7 +505,7 @@ window.onload = function() {
                  
                  if(this.star_bullet==1){
                    for(var i in enemy_beam){
-                     if(enemy_beam[i].within(this,500)){
+                     if(enemy_beam[i].within(this,300)){
                        enemy_beam[i].x=-100;
                        game.rootScene.removeChild(enemy_beam[i]);
                        delete enemy_beam[enemy_beam[i].key];
@@ -544,7 +549,7 @@ window.onload = function() {
                  s.move=1;
                  if(this.star_bullet==1){
                    for(var i in enemy_beam){
-                     if(enemy_beam[i].within(this,500)){
+                     if(enemy_beam[i].within(this,300)){
                        enemy_beam[i].x=-100;
                        game.rootScene.removeChild(enemy_beam[i]);
                        delete enemy_beam[enemy_beam[i].key];
@@ -1551,13 +1556,6 @@ var spin_effect = Class.create(Sprite,{
          this.wait=2;
          this.addEventListener('enterframe',function(){
            SB=1;
-           for(var i in enemy_beam){
-             if(1){
-               enemy_beam[i].x=-100;
-               game.rootScene.removeChild(enemy_beam[i]);
-               delete enemy_beam[enemy_beam[i].key];
-             }
-           }
            this.line-=1;
            if(this.line<=0){
              var l=new beam_line();
@@ -1899,7 +1897,7 @@ var spin_effect = Class.create(Sprite,{
            this.y+=this.v*Math.sin(this.rotation/180*Math.PI)*TimeSpeed;
            for(var i in player){
              if(player[i].within(this,this.radious) && player[i].hp>0 && player[i].hit_lug<=0 && player[i].face!=1){
-               player[i].hp-=2;
+               player[i].hp-=4;
                player[i].hit_lug=6;
                player[i].frame=5;
                var b=new bomb_s();
@@ -1908,6 +1906,7 @@ var spin_effect = Class.create(Sprite,{
                this.x=-100;
                this.hit=1;
                
+               if(Math.floor(Math.random()*8)==0){Power-=0.1;}
                HIT=1;
                
                game.rootScene.removeChild(this);
@@ -1960,7 +1959,7 @@ var spin_effect = Class.create(Sprite,{
                b.frame=1;
                this.x=-100;
                this.hit=1;
-               
+               if(Math.floor(Math.random()*4)==0){Power-=0.1;}
                BOMB=1;
                
                game.rootScene.removeChild(this);
@@ -2021,7 +2020,7 @@ var spin_effect = Class.create(Sprite,{
                }
                
                if(player[i].within(this,this.radious) && player[i].hit_lug<=0 && player[i].face!=1){
-                 player[i].hp-=5;
+                 player[i].hp-=6;
                  player[i].hit_lug=10;
                  player[i].face=4;
                  player[i].frame=5;
@@ -2033,6 +2032,7 @@ var spin_effect = Class.create(Sprite,{
                  b.scaleY=2;
                  b.rotation=this.rotation;
                  b.frame=1;
+                 Power-=0.1;
                  this.x=-100;
                  this.hit=1;
                  BOMB=1;
@@ -2631,7 +2631,7 @@ var spin_effect = Class.create(Sprite,{
            if(LastBattle==0 && Boss_HP<=0 && Clear==0){
              LastBattle=1;
              game.assets['charge.wav'].play();
-             this.attack_lug=500;
+             this.attack_lug=200;
              for(var i=0;i<2;i++){
                var r=new bomb_r();
                r.x=this.x-30;
@@ -3045,7 +3045,7 @@ var spin_effect = Class.create(Sprite,{
              if(this.pettern==1){
                if(this.attack_lug<=0){
                  this.pettern=2;
-                 this.attack_lug=300;
+                 this.attack_lug=200;
                }
              }
              if(this.pettern==2){
